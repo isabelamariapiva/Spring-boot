@@ -1,5 +1,3 @@
-
-index.html
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -7,24 +5,25 @@ index.html
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora básica</title>
-     <link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <h1>Calculadora Básica</h1>
     <form id="calcForm">
-        <input type=" number" id="num1" name="num1" placeholder="Numero 1" required/>
-    <select id="operacao" name ="operaco" required>
+        <input type="number" id="num1" name="num1" placeholder="Numero 1" required/>
+    <select id="operacao" name ="operacao" required>
          <option value="" disabled selected> Selecione operação</option>
-         <option value=" somar ">Somar </option>
-         <option value=" subtrair ">Subtrair </option>
-         <option value=" multiplicar ">Multiplicar </option>
-         <option value=" dividir ">Dividir </option>
+         <option value="somar">Somar</option>
+         <option value="subtrair">Subtrair</option>
+         <option value="multiplicar">Multiplicar</option>
+         <option value="dividir">Dividir</option>
     </select>
     <input type="number" id ="num2" name ="num2" placeholder="Numero 2" required/>
     <button type="submit"> Calcular</button>
  </form>
  <div id="erro"></div>
  <div id="resultado"></div>
+ <script src="js/script.js"></script>
 </body>
 </html>
 
@@ -93,3 +92,43 @@ style.css
         background-color: #ff1493;
     }
 
+
+script.js
+document.getElementById('calcForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    const num1 = parseFloat(document.getElementById('num1').value);
+    const num2 = parseFloat(document.getElementById('num2').value);
+    const operacao = document.getElementById('operacao').value;
+
+    let resultado = 0;
+    let erro = 0;
+
+    switch(operacao) {
+        case"somar":
+        resultado = num1 + num2;
+        break;
+        case"subtrair":
+        resultado = num1 - num2;
+        break;
+        case"multiplicar":
+        resultado = num1 * num2;
+        break;
+        case"dividir":
+        if(num2 == 0){
+            erro = "Divisão por zero não permitida.";
+        } else{
+            resultado = num1 / num2;
+        }
+        break;
+        default:
+            erro = "Operação inválida.";
+    }
+
+
+    if (erro == 0) {
+        document.getElementById('resultado').textContent = resultado;
+    } else {
+        document.getElementById('erro').textContent = erro;
+    }
+});
