@@ -1,0 +1,95 @@
+
+index.html
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora básica</title>
+     <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Calculadora Básica</h1>
+    <form id="calcForm">
+        <input type=" number" id="num1" name="num1" placeholder="Numero 1" required/>
+    <select id="operacao" name ="operaco" required>
+         <option value="" disabled selected> Selecione operação</option>
+         <option value=" somar ">Somar </option>
+         <option value=" subtrair ">Subtrair </option>
+         <option value=" multiplicar ">Multiplicar </option>
+         <option value=" dividir ">Dividir </option>
+    </select>
+    <input type="number" id ="num2" name ="num2" placeholder="Numero 2" required/>
+    <button type="submit"> Calcular</button>
+ </form>
+ <div id="erro"></div>
+ <div id="resultado"></div>
+</body>
+</html>
+
+style.css
+ body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(to right, #ffe6f0, #ffd6ec);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding-top: 100px;
+        
+    }
+
+    h1 {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff0f5;
+    color: #d63384;
+    margin: 0;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(255, 182, 193, 0.4);
+    z-index: 1000;
+    text-shadow: 1px 1px 2px #ffb6c1;
+}
+    
+    form {
+    background-color: #fff0f5;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(255, 192, 203, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 320px;
+    border: 2px solid #ffb6c1;
+    }
+
+    input, select, button {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ffb6c1;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #d63384;
+    }
+
+    select {
+    background-color: #fff0f5;
+    }
+
+    button {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    }
+
+    button:hover {
+        background-color: #ff1493;
+    }
+
