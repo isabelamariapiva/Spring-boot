@@ -19,13 +19,14 @@
          <option value="dividir">Dividir</option>
     </select>
     <input type="number" id ="num2" name ="num2" placeholder="Numero 2" required/>
-    <button type="submit"> Calcular</button>
+    <button type="submit">Calcular</button>
  </form>
  <div id="erro"></div>
  <div id="resultado"></div>
  <script src="js/script.js"></script>
 </body>
 </html>
+
 
 style.css
  body {
@@ -94,14 +95,49 @@ style.css
 
 
 script.js
-document.getElementById('calcForm').addEventListener('submit', async function(e){
-    e.preventDefault();
+document.getElementById('calcForm').addEventListener('submit', async function (e) {
+  e.preventDefault(); 
 
-    const num1 = parseFloat(document.getElementById('num1').value);
-    const num2 = parseFloat(document.getElementById('num2').value);
-    const operacao = document.getElementById('operacao').value;
+  
+  document.getElementById('resultado').textContent = "";
+  document.getElementById('erro').textContent = "";
+ 
+  const num1 = document.getElementById('num1').value;
+  const num2 = document.getElementById('num2').value;
+  const operacao = document.getElementById('operacao').value;
+  try {
+    const response = await fetch('http://localhost:8080/calcular', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        num1,
+        num2,
+        operacao
+      })
+    });
 
-    let resultado = 0;
+    if (!response.ok) {
+      throw new Error('Erro na requisição');
+    }
+
+    const data = await response.json();
+
+    alert(data.resultado);
+    if (data.erro) {
+      document.getElementById('erro').textContent = data.erro;
+    } else {
+      document.getElementById('resultado').textContent = 'Resultado: ' + data.resultado;
+    }
+
+  } catch (err) {
+    document.getElementById('erro').textContent = 'Erro ao conectar com o servidor';
+    console.error(err);
+  }
+});
+/*
+  let resultado = 0;
     let erro = 0;
 
     switch(operacao) {
@@ -124,11 +160,5 @@ document.getElementById('calcForm').addEventListener('submit', async function(e)
         default:
             erro = "Operação inválida.";
     }
+            */
 
-
-    if (erro == 0) {
-        document.getElementById('resultado').textContent = resultado;
-    } else {
-        document.getElementById('erro').textContent = erro;
-    }
-});
