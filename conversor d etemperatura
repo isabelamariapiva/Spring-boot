@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de temperatura</title>
+     <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Conversor de temperatura</h1>
+    <form id="calcForm">
+        <input type="number" id="num1" name="num1" placeholder="Numero 1" required/>
+    <select id="temperatura" name ="temperatura" required>
+         <option value="" disabled selected> Selecione a unidade</option>
+         <option value="C">Celsius (°C)</option>
+         <option value="K">Kelvin(K)</option>
+        <option value="F">Fahrenheit (K)</option>
+        
+    </select>
+    <select id="conversao" name ="conversao" required>
+        <option value="" disabled selected> Selecione operação</option>
+         <option value="celsiusParaKelvin&CelsiusParaFahrenheit">Celsius (°C)</option>
+         <option value="kelvinParaCelsius">Kelvin(K)</option>
+    </select>
+    <button type="submit">Calcular</button>
+ </form>
+ <div id="erro"></div>
+ <div id="resultado"></div>
+ <script src="js/script.js"></script>
+</body>
+</html>
+
+
+
+
+
+style.css
+
+ body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(to right, #ffe6f0, #ffd6ec);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding-top: 100px;
+        
+    }
+
+    h1 {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff0f5;
+    color: #d63384;
+    margin: 0;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(255, 182, 193, 0.4);
+    z-index: 1000;
+    text-shadow: 1px 1px 2px #ffb6c1;
+}
+    
+    form {
+    background-color: #fff0f5;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(255, 192, 203, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 320px;
+    border: 2px solid #ffb6c1;
+    }
+
+    input, select, button {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ffb6c1;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #d63384;
+    }
+
+    select {
+    background-color: #fff0f5;
+    }
+
+    button {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    }
+
+    button:hover {
+        background-color: #ff1493;
+    }
+
+
+
+
+
+
+
+
+
+
+script.js
+document.getElementById('calcForm').addEventListener('submit', async function (e) {
+  e.preventDefault(); 
+
+  
+  document.getElementById('resultado').textContent = "";
+  document.getElementById('erro').textContent = "";
+ 
+  const num1 = document.getElementById('num1').value;
+  const num2 = document.getElementById('num2').value;
+  const operacao = document.getElementById('operacao').value;
+  try {
+    const response = await fetch('http://localhost:8080/calcular', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        num1,
+        num2,
+        operacao
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Erro na requisição');
+    }
+
+    const data = await response.json();
+
+    alert(data.resultado);
+    if (data.erro) {
+      document.getElementById('erro').textContent = data.erro;
+    } else {
+      document.getElementById('resultado').textContent = 'Resultado: ' + data.resultado;
+    }
+
+  } catch (err) {
+    document.getElementById('erro').textContent = 'Erro ao conectar com o servidor';
+    console.error(err);
+  }
+});
+/*
+ function calcularTemperatura(num1, operacao) {
+  let resultado;
+  
+  switch (operacao) {
+    case "celsiusParaKelvin":
+      resultado = num1 + 273.15;
+      break;
+    case "kelvinParaCelsius":
+      resultado = num1 - 273.15;
+      break;
+    default:
+      throw new Error("Operação inválida");
+  }
+
+  return resultado;
+    }
+            */
