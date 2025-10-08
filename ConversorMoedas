@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Moedas</title>
+     <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Conversor de Moedas</h1>
+    
+      <div class="container"></div>
+    <form id="calcForm">
+        <input type="number" id="valor" name="valor" placeholder="Valor" required/>
+    <select id="moedaOrigem" name ="MoedaOrigem" required>
+         <option value="" disabled selected>Selecione a moeda de origem</option>
+         <option value="BRL">Real</option>
+         <option value="USD">Dolar</option>
+         <option value="EUR">Euro</option>
+    </select>
+    <select id="moedaDestino" name ="moedaDestino" required>
+         <option value="" disabled selected> Selecione a moeda de destino</option>
+         <option value="BRL">Real</option>
+         <option value="USD">Dolar</option>
+         <option value="EUR">Euro</option>
+    </select>
+    <div id="resultado" class="resultado-box"></div>
+    <button type="submit">Calcular</button>
+ </form>
+ <div id="erro"></div>
+ <div id="resultado"></div>
+ <script src="js/script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+style.css
+body {
+  font-family: 'arial', cursive, sans-serif;
+  background: linear-gradient(to right, rgb(252, 185, 232), #ffd6ec);
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;       
+  height: 100vh;             
+  margin: 0;
+}
+
+    h1 {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color:linear-gradient(to right, rgb(197, 141, 180), #ffddef);
+    display: center;
+    color: #d63384;
+    margin: 0;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(255, 182, 193, 0.4);
+    z-index: 1000;
+    text-shadow: 1px 1px 2px #3f0d14;
+}
+    
+    form {
+        background-color: #f8d7eb;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 0 15px rgba(20, 0, 15, 0.5);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 320px;
+        border: 2px solid #42052b;
+    }
+
+    input, select, button {
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #fff6fd;
+        border-radius: 10px;
+        box-sizing: border-box;
+        background-color: #fff;
+        color: #050103;
+    }
+
+    select {
+        background-color: #fff0f5;
+    }
+
+    button {
+        background-color: #e2abc7;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-weight: bold;
+    }
+
+    button:hover {
+        background-color: #a85596;
+    }
+
+
+.resultado-box {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffe0f0;
+  border: 2px solid #c54278;
+  border-radius: 15px;
+  box-shadow: 0 0 12px rgba(201, 72, 123, 0.3);
+  font-size: 18px;
+  font-weight: center; 
+  text-align: center;
+  width: 270px;
+  display: center; 
+}
+
+
+
+
+
+
+script.js
+document.getElementById('calcForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const valor = parseFloat(document.getElementById('valor').value);
+    const moedaOrigem = document.getElementById('moedaOrigem').value;
+    const moedaDestino = document.getElementById('moedaDestino').value;
+    const erroDiv = document.getElementById('erro');
+    const resultadoDiv = document.getElementById('resultado');
+
+    erroDiv.textContent = '';
+    resultadoDiv.textContent = '';
+     
+
+    if (moedaOrigem === moedaDestino) {
+        erroDiv.textContent = 'Por favor, escolha moedas diferentes para conversão.';
+        return;
+    }
+
+    if (isNaN(valor) || valor <= 0) {
+        erroDiv.textContent = 'Por favor, insira um valor válido maior que zero.';
+        return;
+    }
+
+    const taxas = {
+        BRL: { USD: 0.20, EUR: 0.18 },
+        USD: { BRL: 5.00, EUR: 0.90 },
+        EUR: { BRL: 5.50, USD: 1.10 }
+    };
+
+    let valorConvertido;
+
+    if (taxas[moedaOrigem] && taxas[moedaOrigem][moedaDestino]) {
+        valorConvertido = valor * taxas[moedaOrigem][moedaDestino];
+    } else {
+        erroDiv.textContent = 'Conversão não disponível.';
+        return;
+    }
+
+    resultadoDiv.textContent = `${valor.toFixed(2)} ${moedaOrigem} equivalem a ${valorConvertido.toFixed(2)} ${moedaDestino}`;
+     resultadoDiv.style.display = 'block'; 
+});
+
+fetch('http://localhost:8080/ConversorMoedas', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: new URLSearchParams({
+        real: valorOrigem,
+        dolar: valorOrigem,
+        euro: valorOrigem,
+        operacao: operacao 
+    })
+})
+.then(response => response.json())
+.then(data => {
+    console.log(data);
+
+});
+
