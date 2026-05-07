@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produto - Petshop Reino Animal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#ECEDD1] font-sans text-gray-800 min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="bg-[#F4B8D7] px-8 py-3 flex justify-between items-center border-b-[5px] border-pink-300 sticky top-0 z-50">
+
+    <img src="imgs/logo.png" class="w-[70px] rounded-full">
+
+    <nav class="space-x-6 font-semibold">
+      <a href="index.html" class="hover:text-pink-600 transition">Home</a>
+      <a href="index.html#servicos" class="hover:text-pink-600 transition">Serviços</a>
+      <a href="agendamento.html" class="hover:text-pink-600 transition">Agendamentos</a>
+    </nav>
+
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="flex-1 flex items-center justify-center p-6">
+
+    <div class="bg-white rounded-3xl shadow-2xl max-w-5xl w-full grid md:grid-cols-2 overflow-hidden">
+
+      <!-- IMAGEM -->
+      <div class="bg-pink-50 flex items-center justify-center p-6">
+        <img id="imagemProduto" class="rounded-2xl w-full h-[420px] object-cover shadow-md">
+      </div>
+
+      <!-- INFO -->
+      <div class="p-10 flex flex-col justify-center">
+
+        <span class="text-pink-500 font-semibold text-sm uppercase">
+          Produto Premium
+        </span>
+
+        <h1 id="nomeProduto" class="text-4xl font-bold mt-2 mb-3"></h1>
+
+        <p id="categoriaProduto" class="text-gray-500 mb-6"></p>
+
+        <!-- descrição -->
+        <p class="text-gray-600 leading-relaxed mb-8">
+          Produto selecionado com alta qualidade para o seu pet ❤️ <br>
+          Conforto, segurança e carinho em cada detalhe.
+        </p>
+
+        <!-- preço destaque -->
+        <div class="mb-6">
+          <p class="text-gray-400 text-sm">Preço</p>
+          <p class="text-3xl font-bold text-pink-500">
+            R$ <span id="precoProduto"></span>
+          </p>
+        </div>
+
+        <!-- botão -->
+        <button
+          onclick="comprarAgora()"
+          class="bg-pink-400 hover:bg-pink-500 text-white py-4 rounded-2xl text-lg font-semibold transition shadow-lg">
+
+          🛒 Comprar Agora
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- SCRIPT -->
+  <script>
+
+    // pegar dados
+    const nome = localStorage.getItem("produtoNome");
+    const categoria = localStorage.getItem("produtoCategoria");
+    const imagem = localStorage.getItem("produtoImagem");
+    const preco = localStorage.getItem("produtoPreco");
+
+    // mostrar
+    document.getElementById("nomeProduto").innerText = nome;
+    document.getElementById("categoriaProduto").innerText = categoria;
+    document.getElementById("imagemProduto").src = imagem;
+    document.getElementById("precoProduto").innerText = preco;
+
+    // carrinho
+    function comprarAgora() {
+
+      let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+      carrinho.push({
+        nome,
+        categoria,
+        imagem,
+        preco: Number(preco),
+        quantidade: 1
+      });
+
+      localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+      window.location.href = "compra.html";
+    }
+
+  </script>
+
+</body>
+
+</html>
+<footer class="bg-[#F4B8D7] text-center py-6 border-t-[5px] border-pink-400 mt-auto">
+    <p class="text-sm">© 2026 Petshop Reino Animal • Todos os direitos reservados</p>
+</footer>

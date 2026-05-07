@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Petshop Reino Animal · Catálogo Encantado</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * { font-family: 'Quicksand', sans-serif; }
+    body {
+      background: linear-gradient(135deg, #fef9e6 0%, #fff0f5 100%);
+    }
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -12px rgba(244, 114, 182, 0.25);
+    }
+    .btn-feminine {
+      transition: all 0.2s ease;
+    }
+    .btn-feminine:active {
+      transform: scale(0.96);
+    }
+    .menu-slide {
+      transition: left 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+    }
+    .categoria-btn {
+      transition: all 0.2s;
+    }
+    .categoria-btn:hover {
+      transform: translateY(-2px);
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #ffe4f0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #f9a8d4;
+      border-radius: 10px;
+    }
+    .modal-backdrop {
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+
+<body class="font-sans text-gray-800 min-h-screen flex flex-col overflow-x-hidden">
+
+  <!-- HEADER FLORAL -->
+  <header class="bg-gradient-to-r from-rose-300 via-pink-300 to-rose-300 px-6 md:px-8 py-3 flex justify-between items-center border-b-[3px] border-pink-400/70 sticky top-0 z-50 shadow-md">
+    <button onclick="abrirMenu()" class="bg-white/90 hover:bg-pink-400 hover:text-white text-pink-500 px-4 py-2 rounded-xl shadow-md transition-all duration-200 btn-feminine">
+      <i class="fas fa-bars text-lg"></i>
+    </button>
+
+    <div class="flex items-center gap-3 cursor-pointer">
+      <img src="imgs/logo.png" class="w-[60px] rounded-full shadow-md" onerror="this.src='https://placehold.co/200x200?text=🐾'">
+      <span class="font-bold text-white text-xl hidden sm:block drop-shadow">Reino Animal</span>
+    </div>
+
+    <nav class="space-x-5 font-semibold hidden md:flex bg-white/30 backdrop-blur-sm px-5 py-2 rounded-full">
+      <a href="index.html" class="text-rose-700 hover:text-pink-600 transition"><i class="fas fa-home"></i> Home</a>
+      <a href="index.html#servicos" class="text-rose-700 hover:text-pink-600 transition"><i class="fas fa-heart"></i> Serviços</a>
+      <a href="agendamento.html" class="text-rose-700 hover:text-pink-600 transition"><i class="fas fa-calendar-alt"></i> Agendamentos</a>
+    </nav>
+
+    <!-- PESQUISA -->
+    <div class="flex items-center bg-white/90 rounded-full px-4 py-2 shadow-md border border-pink-200">
+      <input type="text" id="searchInput" placeholder="Buscar produto..." class="outline-none text-sm px-2 w-[120px] md:w-[180px] bg-transparent">
+      <i class="fas fa-search text-gray-500 cursor-pointer hover:text-pink-500 transition"></i>
+    </div>
+  </header>
+
+  <!-- CATEGORIAS HORIZONTAIS -->
+  <div id="categoriasHeader" class="bg-pink-50/80 border-b border-pink-200 px-6 py-3 flex gap-3 overflow-x-auto whitespace-nowrap shadow-sm">
+  </div>
+
+  <!-- MENU LATERAL -->
+  <div id="menu" class="fixed top-0 left-[-340px] w-[300px] h-full bg-white/95 backdrop-blur-md shadow-2xl transition-all duration-300 z-50 p-6 overflow-y-auto border-r border-pink-200">
+    <div class="flex justify-between items-center mb-6 pb-3 border-b border-pink-200">
+      <h2 class="text-2xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+        <i class="fas fa-paw"></i> Categorias
+      </h2>
+      <button onclick="fecharMenu()" class="text-2xl hover:text-pink-500 transition w-8 h-8 rounded-full flex items-center justify-center">✕</button>
+    </div>
+
+    <button onclick="toggleConfig()" class="bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white px-4 py-3 rounded-2xl w-full mb-5 transition shadow-md flex items-center justify-center gap-2">
+      <i class="fas fa-sliders-h"></i> Gerenciar Categorias
+    </button>
+
+    <div id="configBox" class="hidden mb-6 bg-pink-50 p-4 rounded-2xl">
+      <input id="novaCategoria" type="text" placeholder="✨ Nova categoria ✨" class="border border-pink-200 rounded-2xl p-3 w-full mb-3 outline-none focus:ring-2 focus:ring-pink-300">
+      <button onclick="adicionarCategoria()" class="bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-2xl w-full transition shadow-md">
+        <i class="fas fa-plus-circle"></i> Adicionar
+      </button>
+    </div>
+
+    <ul id="listaCategorias" class="space-y-3"></ul>
+  </div>
+
+  <!-- MAIN -->
+  <main class="max-w-7xl mx-auto px-4 md:px-8 py-10 flex-1 w-full">
+    <div class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+      <h1 class="text-4xl font-extrabold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+        <i class="fas fa-paw text-pink-400"></i> Produtos Encantados
+      </h1>
+      <button onclick="abrirModal()" class="bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white px-6 py-3 rounded-2xl shadow-lg transition flex items-center gap-2 btn-feminine">
+        <i class="fas fa-plus-circle text-lg"></i> Novo Produto
+      </button>
+    </div>
+
+    <div id="produtos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7">
+    </div>
+  </main>
+
+  <footer class="bg-gradient-to-r from-pink-200 to-rose-200 text-center py-6 border-t border-pink-300 mt-auto">
+    <p class="text-sm text-rose-700">🐾 © 2026 Petshop Reino Animal • Cuidado com amor e flores 🌸</p>
+    <div class="flex justify-center gap-4 mt-2">
+      <i class="fab fa-instagram text-rose-500 hover:text-pink-600 transition"></i>
+      <i class="fab fa-whatsapp text-rose-500 hover:text-pink-600 transition"></i>
+      <i class="fas fa-envelope text-rose-500 hover:text-pink-600 transition"></i>
+    </div>
+  </footer>
+
+  <!-- MODAL NOVO PRODUTO -->
+  <div id="modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4 modal-backdrop" onclick="if(event.target===this) fecharModal()">
+    <div class="bg-white rounded-3xl p-7 w-full max-w-[450px] shadow-2xl border border-pink-100">
+      <h2 class="text-3xl font-bold text-center mb-5 bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+        ✨ Novo Produto ✨
+      </h2>
+      
+      <input id="nomeProduto" type="text" placeholder="Nome do produto" class="border border-pink-200 rounded-2xl p-4 w-full mb-4 outline-none focus:ring-2 focus:ring-pink-300">
+      
+      <input id="precoProduto" type="number" step="0.01" placeholder="Preço (R$)" class="border border-pink-200 rounded-2xl p-4 w-full mb-4 outline-none focus:ring-2 focus:ring-pink-300">
+      
+      <select id="categoriaProduto" class="border border-pink-200 rounded-2xl p-4 w-full mb-4 outline-none focus:ring-2 focus:ring-pink-300 bg-white">
+        <option value="">📌 Escolha uma categoria</option>
+      </select>
+      
+      <div class="border-2 border-dashed border-pink-300 rounded-2xl p-4 mb-5 text-center hover:border-pink-500 transition">
+        <label class="cursor-pointer flex flex-col items-center gap-2">
+          <i class="fas fa-cloud-upload-alt text-pink-400 text-3xl"></i>
+          <span class="text-sm text-gray-500">Clique para adicionar foto</span>
+          <input id="fotoProduto" type="file" accept="image/*" class="hidden">
+        </label>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="salvarProduto()" class="flex-1 bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white py-3 rounded-2xl transition font-semibold">
+          <i class="fas fa-save"></i> Salvar
+        </button>
+        <button onclick="fecharModal()" class="flex-1 bg-gray-100 hover:bg-gray-200 py-3 rounded-2xl transition">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========== MENU ==========
+    function abrirMenu() { document.getElementById("menu").style.left = "0"; }
+    function fecharMenu() { document.getElementById("menu").style.left = "-340px"; }
+    function toggleConfig() { document.getElementById("configBox").classList.toggle("hidden"); }
+    function abrirModal() { document.getElementById("modal").classList.remove("hidden"); }
+    function fecharModal() { document.getElementById("modal").classList.add("hidden"); }
+
+    // ========== FILTRAR (CATEGORIA + TEXTO) ==========
+    function filtrar(categoriaSelecionada) {
+      let produtosDiv = document.querySelectorAll(".produto-card");
+      let searchTerm = document.getElementById("searchInput")?.value.toLowerCase() || "";
+      
+      produtosDiv.forEach(card => {
+        let cardCategoria = card.getAttribute("data-categoria");
+        let cardNome = card.getAttribute("data-nome")?.toLowerCase() || "";
+        let matchCategoria = (categoriaSelecionada === "todos" || cardCategoria === categoriaSelecionada);
+        let matchSearch = cardNome.includes(searchTerm);
+        
+        if (matchCategoria && matchSearch) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    // Pesquisa em tempo real
+    document.addEventListener("DOMContentLoaded", () => {
+      const searchInput = document.getElementById("searchInput");
+      if(searchInput) {
+        searchInput.addEventListener("input", () => {
+          filtrar(window.currentFilter || "todos");
+        });
+      }
+    });
+
+    let currentFilter = "todos";
+
+    // ========== LOCALSTORAGE PRODUTOS ==========
+    function pegarProdutos() { return JSON.parse(localStorage.getItem("produtos")) || []; }
+    function salvarProdutos(produtos) { localStorage.setItem("produtos", JSON.stringify(produtos)); }
+
+    // Abrir produto (passando o PREÇO corretamente)
+    function abrirProduto(nome, categoria, imagem, preco) {
+      localStorage.setItem("produtoNome", nome);
+      localStorage.setItem("produtoCategoria", categoria);
+      localStorage.setItem("produtoImagem", imagem);
+      localStorage.setItem("produtoPreco", preco.toString());  // 🔥 GARANTE PREÇO CONSISTENTE
+      window.location.href = "produto.html";
+    }
+
+    function deletarProduto(index) {
+      if (!confirm("🐾 Tem certeza que deseja excluir este produto?")) return;
+      let produtos = pegarProdutos();
+      produtos.splice(index, 1);
+      salvarProdutos(produtos);
+      renderizarProdutos();
+    }
+
+    // Criar card com visual feminino e preço correto
+    function criarCard(produto, index) {
+      let produtosDiv = document.getElementById("produtos");
+      let card = document.createElement("div");
+      let precoFormatado = typeof produto.preco === 'number' ? produto.preco.toFixed(2) : parseFloat(produto.preco || 0).toFixed(2);
+      
+      card.className = `produto-card ${produto.categoria} bg-white rounded-2xl overflow-hidden shadow-md card-hover transition-all relative border border-pink-100`;
+      card.setAttribute("data-categoria", produto.categoria);
+      card.setAttribute("data-nome", produto.nome);
+      
+      card.innerHTML = `
+        <button onclick="deletarProduto(${index})" class="absolute top-3 right-3 bg-white/90 backdrop-blur hover:bg-red-500 hover:text-white text-red-500 w-8 h-8 rounded-full shadow-md z-10 transition flex items-center justify-center">
+          <i class="fas fa-trash-alt text-sm"></i>
+        </button>
+        <img src="${produto.imagem}" class="w-full h-[210px] object-cover" onerror="this.src='https://placehold.co/400x300?text=🐶+🐱'">
+        <div class="p-5">
+          <h3 class="font-bold text-xl mb-1 text-gray-800">${produto.nome}</h3>
+          <p class="text-pink-400 text-sm mb-3 flex items-center gap-1"><i class="fas fa-tag"></i> ${produto.categoria.replace(/-/g, ' ')}</p>
+          <p class="text-2xl font-extrabold text-pink-600 mb-4">R$ ${precoFormatado}</p>
+          <button onclick="abrirProduto('${produto.nome.replace(/'/g, "\\'")}', '${produto.categoria}', '${produto.imagem}', ${parseFloat(produto.preco)})" class="w-full bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white py-3 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+            <i class="fas fa-shopping-bag"></i> Comprar
+          </button>
+        </div>
+      `;
+      produtosDiv.appendChild(card);
+    }
+
+    function renderizarProdutos() {
+      let produtosDiv = document.getElementById("produtos");
+      produtosDiv.innerHTML = `
+        <div onclick="abrirModal()" class="bg-white/80 backdrop-blur-sm border-2 border-dashed border-pink-300 rounded-2xl h-[350px] flex flex-col items-center justify-center cursor-pointer card-hover hover:border-pink-500 transition shadow-sm">
+          <div class="text-7xl text-pink-400 mb-3"><i class="fas fa-plus-circle"></i></div>
+          <p class="text-pink-500 font-semibold text-lg">Adicionar Produto</p>
+          <p class="text-xs text-gray-400 mt-1">crie mimos especiais</p>
+        </div>
+      `;
+      
+      let produtos = pegarProdutos();
+      produtos.forEach((produto, index) => {
+        criarCard(produto, index);
+      });
+    }
+
+    // Salvar produto com preço numérico (garantindo consistência)
+    function salvarProduto() {
+      let nome = document.getElementById("nomeProduto").value.trim();
+      let categoria = document.getElementById("categoriaProduto").value;
+      let foto = document.getElementById("fotoProduto").files[0];
+      let precoInput = document.getElementById("precoProduto").value;
+      
+      if (!nome || !categoria || !foto || !precoInput) {
+        alert("💖 Preencha todos os campos (nome, categoria, preço e foto)! 💖");
+        return;
+      }
+      
+      let precoNum = parseFloat(precoInput);
+      if (isNaN(precoNum) || precoNum <= 0) {
+        alert("Por favor, insira um preço válido (ex: 49.90)");
+        return;
+      }
+      
+      let leitor = new FileReader();
+      leitor.onload = function(e) {
+        let produto = {
+          nome: nome,
+          categoria: categoria,
+          imagem: e.target.result,
+          preco: precoNum
+        };
+        let produtos = pegarProdutos();
+        produtos.push(produto);
+        salvarProdutos(produtos);
+        renderizarProdutos();
+        
+        // Limpar modal
+        document.getElementById("nomeProduto").value = "";
+        document.getElementById("precoProduto").value = "";
+        document.getElementById("categoriaProduto").value = "";
+        document.getElementById("fotoProduto").value = "";
+        fecharModal();
+      };
+      leitor.readAsDataURL(foto);
+    }
+
+    // ========== CATEGORIAS API ==========
+    async function carregarCategorias() {
+      try {
+        let res = await fetch("http://localhost:8080/categoria");
+        let dados = await res.json();
+        
+        let lista = document.getElementById("listaCategorias");
+        let header = document.getElementById("categoriasHeader");
+        let select = document.getElementById("categoriaProduto");
+        
+        lista.innerHTML = "";
+        header.innerHTML = "";
+        select.innerHTML = `<option value="">✨ Escolha uma categoria ✨</option>`;
+        
+        // Botão TODOS no header
+        let btnTodos = document.createElement("button");
+        btnTodos.innerText = "🌸 Todos";
+        btnTodos.className = "categoria-btn bg-white hover:bg-pink-400 hover:text-white px-5 py-2 rounded-full shadow transition font-medium";
+        btnTodos.onclick = () => { currentFilter = "todos"; filtrar("todos"); fecharMenu(); };
+        header.appendChild(btnTodos);
+        
+        // Todos no menu lateral
+        let liTodos = document.createElement("li");
+        liTodos.className = "bg-gradient-to-r from-pink-50 to-rose-50 px-4 py-3 rounded-2xl shadow cursor-pointer hover:shadow-md transition border border-pink-200 flex items-center gap-2";
+        liTodos.innerHTML = `<i class="fas fa-star text-pink-400"></i> <span class="font-medium">Todos os produtos</span>`;
+        liTodos.onclick = () => { currentFilter = "todos"; filtrar("todos"); fecharMenu(); };
+        lista.appendChild(liTodos);
+        
+        dados.forEach(cat => {
+          let nomeClasse = cat.nome.toLowerCase().trim().replace(/\s+/g, "-");
+          
+          // Option select
+          let option = document.createElement("option");
+          option.value = nomeClasse;
+          option.innerText = cat.nome;
+          select.appendChild(option);
+          
+          // Botão header
+          let btnHeader = document.createElement("button");
+          btnHeader.innerText = cat.nome;
+          btnHeader.className = "categoria-btn bg-white hover:bg-pink-400 hover:text-white px-5 py-2 rounded-full shadow transition font-medium whitespace-nowrap";
+          btnHeader.onclick = () => { currentFilter = nomeClasse; filtrar(nomeClasse); };
+          header.appendChild(btnHeader);
+          
+          // Item menu
+          let li = document.createElement("li");
+          li.className = "flex items-center justify-between bg-white px-4 py-3 rounded-2xl shadow-sm hover:shadow-md transition border border-pink-50";
+          
+          let span = document.createElement("span");
+          span.innerText = cat.nome;
+          span.className = "cursor-pointer font-medium hover:text-pink-500 transition flex items-center gap-2";
+          span.innerHTML = `<i class="fas fa-heart text-pink-300 text-xs"></i> ${cat.nome}`;
+          span.onclick = () => { currentFilter = nomeClasse; filtrar(nomeClasse); fecharMenu(); };
+          
+          let actions = document.createElement("div");
+          actions.className = "flex items-center gap-2";
+          
+          let btnAdd = document.createElement("button");
+          btnAdd.innerHTML = '<i class="fas fa-plus text-xs"></i>';
+          btnAdd.className = "bg-green-400 hover:bg-green-500 text-white w-7 h-7 rounded-full flex items-center justify-center transition";
+          btnAdd.onclick = (e) => {
+            e.stopPropagation();
+            abrirModal();
+            fecharMenu();
+            document.getElementById("categoriaProduto").value = nomeClasse;
+          };
+          
+          let btnDelete = document.createElement("button");
+          btnDelete.innerHTML = '<i class="fas fa-trash-alt text-xs text-gray-400 hover:text-red-500"></i>';
+          btnDelete.className = "hover:scale-110 transition w-7 h-7 flex items-center justify-center";
+          btnDelete.onclick = async (e) => {
+            e.stopPropagation();
+            if (confirm(`Excluir categoria "${cat.nome}"?`)) {
+              try {
+                await fetch(`http://localhost:8080/categoria/${cat.id}`, { method: "DELETE" });
+                carregarCategorias();
+              } catch (erro) { console.log("Erro:", erro); }
+            }
+          };
+          
+          actions.appendChild(btnAdd);
+          actions.appendChild(btnDelete);
+          li.appendChild(span);
+          li.appendChild(actions);
+          lista.appendChild(li);
+        });
+      } catch (erro) {
+        console.log("Erro ao carregar categorias:", erro);
+      }
+    }
+    
+    async function adicionarCategoria() {
+      let input = document.getElementById("novaCategoria");
+      let nome = input.value.trim();
+      if (!nome) return;
+      try {
+        await fetch("http://localhost:8080/categoria", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nome: nome })
+        });
+        input.value = "";
+        carregarCategorias();
+      } catch (erro) { console.log("Erro:", erro); }
+    }
+    
+    // Inicialização
+    carregarCategorias();
+    renderizarProdutos();
+  </script>
+</body>
+</html>

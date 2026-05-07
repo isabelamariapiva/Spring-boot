@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Reino Animal · Encanto & Cuidado</title>
+  <!-- Tailwind + FontAwesome + Google Fonts (fonte delicada) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Quicksand', sans-serif; }
+    body {
+      background: linear-gradient(145deg, #fff5f9 0%, #ffe4f0 100%);
+    }
+    /* detalhes femininos e suaves */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 200, 220, 0.5);
+    }
+    .btn-feminino {
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(244, 114, 182, 0.25);
+    }
+    .btn-feminino:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(244, 114, 182, 0.3);
+    }
+    .quantity-btn-fem {
+      transition: all 0.2s;
+    }
+    .quantity-btn-fem:active {
+      transform: scale(0.92);
+    }
+    .heart-floating {
+      animation: floatSoft 4s infinite ease-in-out;
+    }
+    @keyframes floatSoft {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0px); }
+    }
+    .shine-effect {
+      background: linear-gradient(120deg, rgba(255,255,255,0) 30%, rgba(255,245,250,0.7) 50%, rgba(255,255,255,0) 70%);
+      background-size: 200% 100%;
+      animation: shine 3s infinite;
+    }
+    @keyframes shine {
+      to { background-position: 200% center; }
+    }
+    .badge-rose {
+      background: linear-gradient(115deg, #ffb3c6, #ff8eb5);
+    }
+    .border-grace {
+      border-image: none;
+      box-shadow: 0 8px 28px -6px rgba(255, 105, 180, 0.15);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- HEADER FLORAL / FEMININO E LEVE -->
+  <header class="sticky top-0 z-20 bg-white/70 backdrop-blur-md border-b border-pink-200/50 shadow-sm px-6 md:px-8 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <div class="w-11 h-11 rounded-full bg-gradient-to-br from-pink-300 to-rose-300 flex items-center justify-center shadow-md heart-floating">
+        <i class="fas fa-feather-alt text-white text-xl"></i>
+      </div>
+      <div>
+        <span class="text-xl font-semibold tracking-wide text-rose-500">Reino Animal</span>
+        <span class="text-[10px] text-pink-400 block -mt-1">❤️ amor que transforma</span>
+      </div>
+    </div>
+    <a href="index.html" class="group flex items-center gap-2 text-pink-500 hover:text-pink-700 font-medium transition bg-pink-50/70 hover:bg-pink-100 px-5 py-2 rounded-full text-sm shadow-sm">
+      <i class="fas fa-arrow-left text-xs group-hover:-translate-x-0.5 transition"></i>
+      <span>Voltar ao catálogo</span>
+    </a>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="flex-1 flex items-center justify-center p-5 md:p-8">
+    <div class="max-w-6xl w-full mx-auto">
+      
+      <!-- mimoso breadcrumb -->
+      <div class="flex items-center gap-2 text-sm text-pink-400 mb-5 ml-1">
+        <i class="fas fa-home text-pink-300 text-xs"></i>
+        <a href="index.html" class="hover:text-pink-600 transition">Início</a>
+        <i class="fas fa-chevron-right text-[10px] text-pink-300"></i>
+        <span class="text-rose-400 font-medium">Detalhes do produto</span>
+        <i class="fas fa-heart text-[10px] text-pink-300 ml-1"></i>
+      </div>
+
+      <!-- CARD COM TOQUE FEMININO: BORDAS SUAVES, SOMBRA ROSA -->
+      <div class="bg-white/80 rounded-[2.5rem] shadow-2xl shadow-pink-200/40 overflow-hidden border border-pink-100 transition-all duration-300 backdrop-blur-sm">
+        <div class="grid md:grid-cols-2 gap-0">
+          
+          <!-- ÁREA DA IMAGEM: MAIS DELICADA COM FLORES/CORAÇÃO -->
+          <div class="bg-gradient-to-br from-pink-50 to-rose-50/50 p-6 md:p-8 flex flex-col items-center justify-center relative">
+            <!-- selo fofo e feminino -->
+            <div class="absolute top-6 left-6 z-10">
+              <div class="badge-rose text-white text-[11px] font-bold px-4 py-1.5 rounded-full shadow-md flex items-center gap-1">
+                <i class="fas fa-star-of-life text-[9px]"></i>
+                <span>EDIÇÃO MIMOSA</span>
+                <i class="fas fa-spa text-[9px] ml-1"></i>
+              </div>
+            </div>
+            <!-- efeito delicado de brilho -->
+            <div class="absolute top-20 right-8 w-20 h-20 bg-pink-200/30 rounded-full blur-2xl"></div>
+            <div class="image-container relative w-full flex justify-center">
+              <img id="imagemProduto" class="product-img w-full max-h-[450px] object-contain rounded-2xl drop-shadow-lg transition-transform duration-500 hover:scale-[1.01]" alt="Produto fofo">
+            </div>
+            <!-- mini flores decorativas -->
+            <div class="flex gap-3 mt-6">
+              <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center shadow-inner text-pink-400"><i class="fas fa-leaf text-sm"></i></div>
+              <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center shadow-inner text-rose-400"><i class="fas fa-heart text-sm"></i></div>
+              <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center shadow-inner text-pink-400"><i class="fas fa-feather text-sm"></i></div>
+            </div>
+            <p class="text-[11px] text-pink-300 mt-3 italic">✨ 100% cruelty-free · amor em cada detalhe</p>
+          </div>
+
+          <!-- LADO DIREITO: INFORMAÇÕES SUPER FEMININAS -->
+          <div class="p-8 md:p-10 flex flex-col justify-between bg-white/60 rounded-r-2xl">
+            <div>
+              <!-- categoria com toque girlie -->
+              <div class="flex items-center gap-2 mb-2">
+                <div class="w-6 h-6 bg-pink-100 rounded-full flex items-center justify-center"><i class="fas fa-ribbon text-pink-400 text-[10px]"></i></div>
+                <span id="categoriaProduto" class="text-pink-500 text-sm font-semibold tracking-wide uppercase"></span>
+              </div>
+              
+              <h1 id="nomeProduto" class="text-3xl md:text-4xl font-bold text-gray-800 leading-tight tracking-wide"></h1>
+              
+              <!-- descrições cheias de carinho -->
+              <div class="mt-5 space-y-3">
+                <p class="text-gray-500 text-sm flex items-start gap-2">
+                  <i class="fas fa-spa text-pink-400 mt-0.5 text-sm"></i>
+                  <span>Mimo especial para seu melhor amigo. Produto com certificado Pet Friendly.</span>
+                </p>
+                <p class="text-gray-500 text-sm flex items-start gap-2">
+                  <i class="fas fa-gift text-pink-400 mt-0.5 text-sm"></i>
+                  <span>Embalagem sustentável + cartão de amor inclusos.</span>
+                </p>
+                <p class="text-pink-400 text-xs flex items-center gap-1 bg-pink-50/70 px-3 py-1.5 rounded-full w-fit">
+                  <i class="fas fa-crown text-[10px]"></i> Clube Reino Animal: ganhe +10 pontos nesta compra
+                </p>
+              </div>
+
+              <!-- PREÇO COM ESTILO FEMININO -->
+              <div class="mt-7 pt-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-gray-400 text-sm font-medium">💖 Preço especial</span>
+                  <span class="text-pink-500 bg-pink-100 px-2 py-0.5 rounded-full text-[11px] font-semibold">🐾 PET LOVE</span>
+                </div>
+                <div class="mt-1 flex items-baseline gap-3 flex-wrap">
+                  <p id="precoProduto" class="text-5xl md:text-6xl font-extrabold text-pink-600 tracking-tight"></p>
+                  <span class="text-gray-300 line-through text-sm">R$ 0,00</span>
+                </div>
+                <div class="flex gap-2 mt-1">
+                  <span class="text-green-600 text-xs bg-green-50 px-2 py-0.5 rounded-full"><i class="fas fa-smile-wink"></i> À vista 10% off</span>
+                  <span class="text-xs text-gray-400"><i class="fas fa-credit-card"></i> 4x sem juros</span>
+                </div>
+              </div>
+
+              <!-- QUANTIDADE COM BOTÕES BONITINHOS -->
+              <div class="mt-8">
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-gray-700 font-semibold text-sm flex items-center gap-1"><i class="far fa-heart text-pink-400"></i> Quantidade</label>
+                  <span class="text-[11px] text-pink-400 bg-pink-50 px-2 py-0.5 rounded-full"><i class="fas fa-check-circle"></i> 42 unidades disponíveis</span>
+                </div>
+                <div class="flex items-center gap-4">
+                  <div class="flex items-center bg-pink-50/70 rounded-full p-1 shadow-sm">
+                    <button onclick="diminuirQtd()" 
+                      class="quantity-btn-fem w-9 h-9 rounded-full bg-white text-pink-500 hover:bg-pink-200 hover:text-pink-700 text-lg flex items-center justify-center shadow-sm transition-all">
+                      <i class="fas fa-minus text-xs"></i>
+                    </button>
+                    <span id="qtd" class="w-12 text-center text-xl font-bold text-gray-700 select-none">1</span>
+                    <button onclick="aumentarQtd()"
+                      class="quantity-btn-fem w-9 h-9 rounded-full bg-pink-400 text-white hover:bg-pink-500 text-lg flex items-center justify-center shadow-md transition-all">
+                      <i class="fas fa-plus text-xs"></i>
+                    </button>
+                  </div>
+                  <div class="text-pink-400 text-[11px] flex items-center gap-1">
+                    <i class="fas fa-chess-queen"></i>
+                    <span>mimo extra acima de 2 unidades</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- BOTÃO PRINCIPAL ENCANTADOR -->
+              <button onclick="comprar()" 
+                class="btn-feminino mt-9 w-full bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-pink-300/40 flex items-center justify-center gap-3 transition-all duration-200 group">
+                <i class="fas fa-shopping-bag text-xl group-hover:scale-105 transition"></i>
+                <span>Adicionar à sacola</span>
+                <i class="fas fa-arrow-right text-sm opacity-80 group-hover:translate-x-1 transition"></i>
+              </button>
+
+              <!-- BOTÕES DE APOIO COM SÍMBOLOS ROMÂNTICOS -->
+              <div class="mt-6 flex justify-between items-center text-xs text-rose-400 border-t border-pink-100 pt-5">
+                <button class="hover:text-pink-600 transition flex items-center gap-1"><i class="far fa-heart"></i> Favoritar</button>
+                <button class="hover:text-pink-600 transition flex items-center gap-1"><i class="fas fa-gift"></i> Caixinha surpresa</button>
+                <button class="hover:text-pink-600 transition flex items-center gap-1"><i class="fas fa-headset"></i> Ajuda fofa</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO DE CONFIABILIDADE COM DESIGN FLORAL -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+        <div class="flex items-center gap-3 bg-white/60 backdrop-blur-sm rounded-2xl p-3 shadow-sm border border-pink-100 hover:shadow-md transition">
+          <div class="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center"><i class="fas fa-feather-alt text-pink-500 text-lg"></i></div>
+          <div><p class="text-sm font-semibold text-gray-700">Entrega <span class="text-pink-500">carinhosa</span></p><p class="text-[11px] text-gray-400">Frete grátis Sul/Sudeste</p></div>
+        </div>
+        <div class="flex items-center gap-3 bg-white/60 rounded-2xl p-3 shadow-sm border border-pink-100"><div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center"><i class="fas fa-palette text-rose-500 text-lg"></i></div><div><p class="text-sm font-semibold text-gray-700">Embalagem especial</p><p class="text-[11px] text-gray-400">Laço e bilhete afetuoso</p></div></div>
+        <div class="flex items-center gap-3 bg-white/60 rounded-2xl p-3 shadow-sm border border-pink-100"><div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center"><i class="fas fa-hand-holding-heart text-amber-500 text-lg"></i></div><div><p class="text-sm font-semibold text-gray-700">Amor garantido</p><p class="text-[11px] text-gray-400">7 dias p/ troca gentil</p></div></div>
+        <div class="flex items-center gap-3 bg-white/60 rounded-2xl p-3 shadow-sm border border-pink-100"><div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center"><i class="fas fa-crown text-purple-400 text-lg"></i></div><div><p class="text-sm font-semibold text-gray-700">Clube de mimos</p><p class="text-[11px] text-gray-400">Resgate + produtos</p></div></div>
+      </div>
+      
+      <!-- DECORAÇÃO FLORAL EXTRA -->
+      <div class="text-center mt-8 text-pink-300 text-[12px] flex justify-center gap-2">
+        <i class="fas fa-seedling"></i> ♡  produtos escolhidos com coração de gateira  ♡  <i class="fas fa-seedling"></i>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER DELICADO COM PAWS & ROSES -->
+  <footer class="mt-12 border-t border-pink-200 bg-pink-50/40 text-center py-6 text-pink-400 text-xs">
+    <div class="flex justify-center gap-6 mb-2">
+      <i class="fab fa-instagram hover:text-pink-500 transition text-base"></i>
+      <i class="fab fa-whatsapp hover:text-pink-500 transition text-base"></i>
+      <i class="fab fa-tiktok hover:text-pink-500 transition text-base"></i>
+      <i class="fas fa-envelope hover:text-pink-500 transition text-base"></i>
+    </div>
+    <p>✨ Reino Animal ✨ onde cada patinha é tratada com amor e flores 🌸</p>
+    <p class="text-[11px] mt-1">🐾 2025 · Feito por corações que amam pets 🐾</p>
+  </footer>
+
+  <script>
+    // ========== CONTROLE DE QUANTIDADE SUAVE ==========
+    let quantidade = 1;
+
+    // Recuperação segura e fofa dos dados
+    const nome = localStorage.getItem("produtoNome") || "Mimo Encantado";
+    let categoria = localStorage.getItem("produtoCategoria") || "Acessórios & Fofura";
+    // deixar categoria mais feminina se estiver vazia
+    if (categoria === "Categoria" || categoria === "") categoria = "✨ Coleção Pink Pet ✨";
+    
+    let imagem = localStorage.getItem("produtoImagem");
+    if (!imagem || imagem === "null" || imagem === "") {
+      imagem = "https://placehold.co/600x600?text=🐾+Reino+Animal+🐾&bg=ffe4f0";
+    }
+    
+    let preco = parseFloat(localStorage.getItem("produtoPreco"));
+    if (isNaN(preco) || preco <= 0) preco = 59.90;
+    
+    function formatarDinheiro(valor) {
+      return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 2 });
+    }
+    
+    // elementos
+    const nomeEl = document.getElementById("nomeProduto");
+    const categoriaEl = document.getElementById("categoriaProduto");
+    const imagemEl = document.getElementById("imagemProduto");
+    const precoEl = document.getElementById("precoProduto");
+    
+    if (nomeEl) nomeEl.innerText = nome;
+    if (categoriaEl) categoriaEl.innerText = categoria;
+    if (imagemEl) {
+      imagemEl.src = imagem;
+      imagemEl.onerror = () => { imagemEl.src = "https://placehold.co/600x600?text=🐶+fofo+pet+🐱&bg=ffe0f0"; };
+    }
+    if (precoEl) precoEl.innerText = formatarDinheiro(preco);
+    
+    const qtdSpan = document.getElementById("qtd");
+    function attQtd() { if (qtdSpan) qtdSpan.innerText = quantidade; }
+    
+    window.aumentarQtd = () => {
+      if (quantidade < 50) { quantidade++; attQtd(); }
+      else {
+        // feedback lúdico
+        const btn = event?.target?.closest?.('button');
+        if(btn) btn.style.transform = 'scale(0.95)';
+        setTimeout(() => { if(btn) btn.style.transform = ''; }, 150);
+      }
+    };
+    
+    window.diminuirQtd = () => {
+      if (quantidade > 1) { quantidade--; attQtd(); }
+      else {
+        const btn = event?.target?.closest?.('button');
+        if(btn) btn.style.transform = 'scale(0.95)';
+        setTimeout(() => { if(btn) btn.style.transform = ''; }, 150);
+      }
+    };
+    
+    // COMPRAR COM CARINHO E REDIRECIONAMENTO FLUIDO
+    window.comprar = function() {
+      let qtdFinal = Math.max(1, parseInt(quantidade) || 1);
+      const itemCarrinho = {
+        nome: nome,
+        categoria: categoria,
+        imagem: imagem,
+        preco: preco,
+        quantidade: qtdFinal,
+        idUnico: Date.now() + "_" + Math.random().toString(36).substr(2, 6),
+        adicionado: new Date().toLocaleString()
+      };
+      
+      try {
+        let carrinhoExistente = JSON.parse(localStorage.getItem("carrinho")) || [];
+        carrinhoExistente.push(itemCarrinho);
+        localStorage.setItem("carrinho", JSON.stringify(carrinhoExistente));
+        
+        const botao = document.querySelector('button[onclick="comprar()"]');
+        if (botao) {
+          const textoOriginal = botao.innerHTML;
+          botao.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Adicionado com amor...';
+          botao.disabled = true;
+          setTimeout(() => {
+            window.location.href = "compra.html";
+          }, 400);
+        } else {
+          window.location.href = "compra.html";
+        }
+      } catch (error) {
+        alert("💖 Produto adicionado! 💖 Redirecionando para finalizar.");
+        window.location.href = "compra.html";
+      }
+    };
+    
+    // animação carregamento suave
+    document.addEventListener("DOMContentLoaded", () => {
+      const card = document.querySelector('.bg-white/80.rounded-\\[2\\.5rem\\]');
+      if(card) card.style.opacity = "0";
+      setTimeout(() => {
+        if(card) card.style.transition = "opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1)";
+        if(card) card.style.opacity = "1";
+      }, 80);
+      
+      // se nome tiver "undefined" cai fallback
+      if((nome === "undefined" || !nome) && nomeEl) nomeEl.innerText = "Presente Especial";
+    });
+  </script>
+</body>
+</html>

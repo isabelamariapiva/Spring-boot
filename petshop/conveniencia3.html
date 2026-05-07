@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-estar e Cuidados · Reino Animal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Quicksand', sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #FAF7E6 0%, #FFF0F5 100%);
+        }
+        .btn-grace {
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .btn-grace:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(244, 114, 182, 0.4);
+        }
+        .image-thumb {
+            transition: all 0.3s ease;
+        }
+        .image-thumb:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 20px rgba(244, 114, 182, 0.3);
+        }
+        .main-img {
+            transition: transform 0.4s ease;
+        }
+        .card-service:hover .main-img {
+            transform: scale(1.02);
+        }
+        @keyframes floatHeart {
+            0%, 100% { transform: translateY(0px); opacity: 0.6; }
+            50% { transform: translateY(-5px); opacity: 1; }
+        }
+        .heart-float {
+            animation: floatHeart 3s ease-in-out infinite;
+        }
+        .list-check li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .list-check li i {
+            color: #f472b6;
+            font-size: 14px;
+            width: 20px;
+        }
+        .badge-spa {
+            background: linear-gradient(135deg, #FFB7D2, #FF9EC4);
+        }
+    </style>
+</head>
+<body class="text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER REFINADO -->
+    <header class="bg-white/80 backdrop-blur-md px-6 md:px-10 py-3 flex justify-between items-center border-b border-pink-200 sticky top-0 z-50 shadow-sm">
+        
+        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+            <div class="w-[55px] h-[55px] rounded-full bg-gradient-to-br from-pink-400 to-rose-400 flex items-center justify-center shadow-md">
+                <i class="fas fa-paw text-white text-xl"></i>
+            </div>
+            <div class="hidden sm:block">
+                <span class="text-xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">Reino Animal</span>
+                <p class="text-[10px] text-pink-400 -mt-1">❤️ amor que transforma</p>
+            </div>
+        </div>
+
+        <nav class="space-x-5 md:space-x-7 font-semibold hidden md:flex bg-pink-50/60 px-6 py-2 rounded-full shadow-inner">
+            <a href="index.html" class="text-pink-600 hover:text-pink-800 transition flex items-center gap-1"><i class="fas fa-paw text-xs"></i> Home</a>
+            <a href="index.html#servicos" class="text-gray-600 hover:text-pink-600 transition flex items-center gap-1"><i class="fas fa-heart text-xs"></i> Serviços</a>
+            <a href="agendamento.html" class="text-gray-600 hover:text-pink-600 transition flex items-center gap-1"><i class="fas fa-calendar-alt text-xs"></i> Agendamentos</a>
+            <a href="index-produtos.html" class="text-gray-600 hover:text-pink-600 transition flex items-center gap-1"><i class="fas fa-store text-xs"></i> Produtos</a>
+        </nav>
+
+        <a href="index.html" class="flex items-center gap-2 bg-pink-100 hover:bg-pink-200 text-pink-600 px-5 py-2 rounded-full transition shadow-sm text-sm font-medium">
+            <i class="fas fa-arrow-left text-xs"></i>
+            <span class="hidden sm:inline">Voltar</span>
+        </a>
+    </header>
+
+    <main class="flex justify-center items-center px-4 py-10 md:py-14 flex-grow">
+        <div class="bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl max-w-6xl w-full p-6 md:p-10 flex flex-col md:flex-row gap-10 border border-pink-100 transition-all duration-300 card-service">
+     
+            <!-- LADO ESQUERDO: IMAGEM PRINCIPAL + GALERIA -->
+            <div class="flex flex-col items-center md:w-1/2">
+                <div class="relative overflow-hidden rounded-2xl shadow-xl">
+                    <img id="imagemPrincipal" src="imgs/estetica.png" 
+                         class="main-img w-full max-w-[400px] h-[320px] md:h-[380px] object-cover rounded-2xl"
+                         onerror="this.src='https://placehold.co/600x400?text=🐾+Bem-estar+&+Cuidados'">
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-semibold text-pink-500 shadow-sm">
+                        <i class="fas fa-spa"></i> Relaxamento & Cuidado
+                    </div>
+                </div>
+
+                <!-- Miniaturas -->
+                <div class="flex gap-4 mt-6 justify-center">
+                    <div class="relative cursor-pointer" onclick="trocarImagem('imgs/bem estar1.webp')">
+                        <img src="imgs/bem estar1.webp" 
+                             class="image-thumb w-20 h-20 rounded-xl object-cover shadow-md border-2 border-pink-200 hover:border-pink-400 transition"
+                             onerror="this.src='https://placehold.co/100x100?text=🐕'">
+                        <i class="fas fa-heart text-pink-400 text-xs absolute -top-1 -right-1 bg-white rounded-full p-0.5 shadow-sm"></i>
+                    </div>
+                    <div class="relative cursor-pointer" onclick="trocarImagem('imgs/bem estar2.webp')">
+                        <img src="imgs/bem estar2.webp" 
+                             class="image-thumb w-20 h-20 rounded-xl object-cover shadow-md border-2 border-pink-200 hover:border-pink-400 transition"
+                             onerror="this.src='https://placehold.co/100x100?text=🐕'">
+                    </div>
+                    <div class="relative cursor-pointer" onclick="trocarImagem('imgs/bem estar3.png')">
+                        <img src="imgs/bem estar3.png" 
+                             class="image-thumb w-20 h-20 rounded-xl object-cover shadow-md border-2 border-pink-200 hover:border-pink-400 transition"
+                             onerror="this.src='https://placehold.co/100x100?text=🐕'">
+                    </div>
+                </div>
+                
+                <!-- selo de tranquilidade -->
+                <div class="mt-5 flex gap-3 text-center text-xs text-gray-500">
+                    <div class="bg-pink-50 rounded-full px-3 py-1"><i class="fas fa-leaf text-pink-400"></i> Ambiente calmo</div>
+                    <div class="bg-pink-50 rounded-full px-3 py-1"><i class="fas fa-hand-holding-heart text-pink-400"></i> Atendimento afetuoso</div>
+                </div>
+            </div>
+
+            <!-- LADO DIREITO: INFORMAÇÕES DETALHADAS -->
+            <div class="flex flex-col justify-between flex-1 md:w-1/2">
+                <div>
+                    <!-- Categoria -->
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-pink-100 text-pink-600 text-xs font-semibold px-3 py-1 rounded-full"><i class="fas fa-spa"></i> Spa & Relaxamento</span>
+                        <span class="bg-rose-100 text-rose-600 text-xs font-semibold px-3 py-1 rounded-full"><i class="fas fa-heart"></i> Cuidado especial</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+                        Bem-estar e Cuidados
+                    </h2>
+
+                    <div class="flex items-center gap-3 mt-3 mb-4">
+                        <div class="flex text-yellow-400 text-lg">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm">(4.9 · 189 avaliações)</span>
+                        <span class="text-pink-400 text-xs bg-pink-50 px-2 py-0.5 rounded-full"><i class="fas fa-certificate"></i> Experiência única</span>
+                    </div>
+
+                    <p class="text-gray-600 text-sm leading-relaxed mb-5">
+                        🧘‍♀️ Pensando no conforto e felicidade do seu pet, oferecemos serviços especiais de cuidado e relaxamento. 
+                        Inclui hidratação de pelos, escovação prolongada, cuidados para pets idosos ou sensíveis, além de 
+                        atenção individualizada. Nosso objetivo é <strong>reduzir o estresse</strong> e aumentar o bem-estar do seu companheiro.
+                    </p>
+
+                    <!-- Lista de serviços -->
+                    <div class="bg-pink-50/50 rounded-2xl p-5 mb-6">
+                        <h3 class="font-bold text-pink-600 mb-3 flex items-center gap-2"><i class="fas fa-heart heart-float"></i> O que oferecemos</h3>
+                        <ul class="list-check space-y-2 text-sm text-gray-700">
+                            <li><i class="fas fa-baby-carriage"></i> <strong>Creche (Daycare):</strong> Socialização e atividades lúdicas para evitar ansiedade.</li>
+                            <li><i class="fas fa-hotel"></i> <strong>Hospedagem:</strong> Hotel aconchegante para seu pet durante viagens.</li>
+                            <li><i class="fas fa-walking"></i> <strong>Dog Walker / Adestramento:</strong> Passeios saudáveis e treinamento comportamental suave.</li>
+                            <li><i class="fas fa-hand-sparkles"></i> <strong>Hidratação e Escovação Terapêutica:</strong> Cuidados intensivos para pelagem e pele.</li>
+                            <li><i class="fas fa-smile"></i> <strong>Atendimento para pets idosos:</strong> Cuidados especiais com muito carinho.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Diferenciais -->
+                    <div class="flex flex-wrap gap-3 mb-6">
+                        <div class="flex items-center gap-1 text-xs bg-white rounded-full px-3 py-1.5 shadow-sm border border-pink-100">
+                            <i class="fas fa-clock text-pink-400"></i> Ambiente preparado
+                        </div>
+                        <div class="flex items-center gap-1 text-xs bg-white rounded-full px-3 py-1.5 shadow-sm border border-pink-100">
+                            <i class="fas fa-music text-pink-400"></i> Música terapêutica
+                        </div>
+                        <div class="flex items-center gap-1 text-xs bg-white rounded-full px-3 py-1.5 shadow-sm border border-pink-100">
+                            <i class="fas fa-truck text-pink-400"></i> Busca e entrega segura
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PREÇO E BOTÕES -->
+                <div class="mt-6 pt-4 border-t border-pink-100">
+                    <div class="flex items-baseline gap-3 mb-5">
+                        <p class="text-4xl md:text-5xl font-black text-pink-500">
+                            R$ 139,90
+                        </p>
+                        <span class="text-gray-400 text-sm line-through">R$ 179,90</span>
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full"><i class="fas fa-tag"></i> -22%</span>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="agendamento.html" 
+                           class="btn-grace bg-gradient-to-r from-pink-500 to-rose-500 text-white px-8 py-3 rounded-xl font-bold text-center shadow-lg flex items-center justify-center gap-2">
+                            <i class="fas fa-calendar-check"></i> Agendar cuidado
+                        </a>
+                        <a href="index.html" 
+                           class="btn-grace bg-gray-100 hover:bg-gray-200 text-pink-600 px-8 py-3 rounded-xl font-semibold text-center flex items-center justify-center gap-2 transition">
+                            <i class="fas fa-arrow-left"></i> Voltar à loja
+                        </a>
+                    </div>
+                    
+                    <!-- informações de pagamento -->
+                    <div class="mt-4 text-center text-xs text-gray-400 flex justify-center gap-4">
+                        <span><i class="fab fa-cc-visa"></i> Visa</span>
+                        <span><i class="fab fa-cc-mastercard"></i> Mastercard</span>
+                        <span><i class="fab fa-pix"></i> Pix até 10% off</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SEÇÃO DE DEPOIMENTO -->
+    <div class="max-w-4xl mx-auto px-4 mb-10">
+        <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-5 text-center border border-pink-100">
+            <i class="fas fa-quote-left text-pink-300 text-2xl mb-2"></i>
+            <p class="text-gray-600 italic text-sm">"Meu cachorro é idoso e sempre fica ansioso, mas no Reino Animal ele se sente em casa! Equipe maravilhosa, cheia de amor. Recomendo demais o serviço de bem-estar!"</p>
+            <p class="text-pink-500 font-semibold text-xs mt-2">— Camila R., mãe do Thor (SRD idoso)</p>
+            <div class="flex justify-center gap-1 mt-2 text-pink-300 text-xs">
+                <i class="fas fa-heart"></i> experiência transformadora
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gradient-to-r from-pink-200 to-rose-200 text-center pt-6 pb-5 border-t border-pink-300 mt-6">
+        <div class="flex justify-center gap-5 mb-3">
+            <i class="fab fa-instagram text-pink-600 hover:text-pink-800 transition text-lg cursor-pointer"></i>
+            <i class="fab fa-whatsapp text-pink-600 hover:text-pink-800 transition text-lg cursor-pointer"></i>
+            <i class="fas fa-envelope text-pink-600 hover:text-pink-800 transition text-lg cursor-pointer"></i>
+        </div>
+        <p class="text-xs text-rose-600">🐾 © 2026 Petshop Reino Animal · O cuidado que seu pet merece, com amor e flores 🌸</p>
+    </footer>
+
+    <script>
+        function trocarImagem(novaImagem) {
+            const imgPrincipal = document.getElementById("imagemPrincipal");
+            if (imgPrincipal) {
+                imgPrincipal.style.opacity = "0.5";
+                imgPrincipal.src = novaImagem;
+                imgPrincipal.onload = () => {
+                    imgPrincipal.style.opacity = "1";
+                };
+                imgPrincipal.onerror = () => {
+                    imgPrincipal.src = "https://placehold.co/600x400?text=🐾+Bem-estar+&+Cuidados";
+                    imgPrincipal.style.opacity = "1";
+                };
+            }
+        }
+
+        // Pré-carregar imagens alternativas com fallback
+        const imagens = ['imgs/bem estar1.webp', 'imgs/bem estar2.webp', 'imgs/bem estar3.png'];
+        imagens.forEach(img => {
+            const testImg = new Image();
+            testImg.src = img;
+        });
+    </script>
+</body>
+</html>

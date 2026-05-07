@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento · Reino Animal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Quicksand', sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #FAF7E6 0%, #FFF0F5 100%);
+        }
+        .btn-grace {
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .btn-grace:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(244, 114, 182, 0.4);
+        }
+        .form-input {
+            transition: all 0.2s ease;
+        }
+        .form-input:focus {
+            transform: translateY(-1px);
+        }
+        @keyframes floatHeart {
+            0%, 100% { transform: translateY(0px); opacity: 0.6; }
+            50% { transform: translateY(-5px); opacity: 1; }
+        }
+        .heart-float {
+            animation: floatHeart 3s ease-in-out infinite;
+        }
+        .calendar-icon {
+            background: linear-gradient(135deg, #FFB7D2, #FF9EC4);
+        }
+    </style>
+</head>
+<body class="text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER REFINADO -->
+    <header class="bg-white/80 backdrop-blur-md px-6 md:px-10 py-3 flex justify-between items-center border-b border-pink-200 sticky top-0 z-50 shadow-sm">
+        
+        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+            <div class="w-[55px] h-[55px] rounded-full bg-gradient-to-br from-pink-400 to-rose-400 flex items-center justify-center shadow-md">
+                <i class="fas fa-paw text-white text-xl"></i>
+            </div>
+            <div class="hidden sm:block">
+                <span class="text-xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">Reino Animal</span>
+                <p class="text-[10px] text-pink-400 -mt-1">❤️ amor que transforma</p>
+            </div>
+        </div>
+
+        <nav class="space-x-5 md:space-x-7 font-semibold hidden md:flex bg-pink-50/60 px-6 py-2 rounded-full shadow-inner">
+            <a href="index.html" class="text-pink-600 hover:text-pink-800 transition flex items-center gap-1"><i class="fas fa-paw text-xs"></i> Home</a>
+            <a href="index.html#servicos" class="text-gray-600 hover:text-pink-600 transition flex items-center gap-1"><i class="fas fa-heart text-xs"></i> Serviços</a>
+            <a href="agendamento.html" class="text-pink-600 hover:text-pink-800 transition flex items-center gap-1"><i class="fas fa-calendar-alt text-xs"></i> Agendamentos</a>
+            <a href="index-produtos.html" class="text-gray-600 hover:text-pink-600 transition flex items-center gap-1"><i class="fas fa-store text-xs"></i> Produtos</a>
+        </nav>
+
+        <a href="index.html" class="flex items-center gap-2 bg-pink-100 hover:bg-pink-200 text-pink-600 px-5 py-2 rounded-full transition shadow-sm text-sm font-medium">
+            <i class="fas fa-arrow-left text-xs"></i>
+            <span class="hidden sm:inline">Voltar</span>
+        </a>
+    </header>
+
+    <div class="flex justify-center items-center py-12 px-4 flex-grow">
+        <div class="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl w-full max-w-lg border border-pink-100 overflow-hidden transition-all duration-300">
+            
+            <!-- cabeçalho decorativo -->
+            <div class="calendar-icon px-6 py-4 text-center">
+                <i class="fas fa-calendar-check text-white text-3xl mb-1"></i>
+                <h2 class="text-2xl font-bold text-white">Agende seu horário</h2>
+                <p class="text-white/80 text-sm">Cuide do seu pet com todo carinho</p>
+            </div>
+
+            <div class="p-8">
+                <form id="formAgendamento" class="space-y-5">
+                    <!-- Data -->
+                    <div>
+                        <label class="font-semibold text-gray-700 block mb-2 flex items-center gap-2">
+                            <i class="fas fa-calendar-day text-pink-400"></i> Data Reserva
+                        </label>
+                        <input type="date" id="dataAgendamento" 
+                               class="form-input w-full p-3 border border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition bg-white/80">
+                    </div>
+
+                    <!-- Horário -->
+                    <div>
+                        <label class="font-semibold text-gray-700 block mb-2 flex items-center gap-2">
+                            <i class="fas fa-clock text-pink-400"></i> Horário
+                        </label>
+                        <input type="time" id="horarioAgendamento" 
+                               class="form-input w-full p-3 border border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition bg-white/80">
+                    </div>
+
+                    <!-- Nome do Cliente -->
+                    <div>
+                        <label class="font-semibold text-gray-700 block mb-2 flex items-center gap-2">
+                            <i class="fas fa-user text-pink-400"></i> Seu nome
+                        </label>
+                        <input type="text" id="nomeCliente" placeholder="Digite seu nome completo" 
+                               class="form-input w-full p-3 border border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition bg-white/80">
+                    </div>
+
+                    <!-- Nome do Pet -->
+                    <div>
+                        <label class="font-semibold text-gray-700 block mb-2 flex items-center gap-2">
+                            <i class="fas fa-dog text-pink-400"></i> Nome do pet
+                        </label>
+                        <input type="text" id="nomePet" placeholder="Digite o nome do seu pet" 
+                               class="form-input w-full p-3 border border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition bg-white/80">
+                    </div>
+
+                    <!-- Serviço (select com opções) -->
+                    <div>
+                        <label class="font-semibold text-gray-700 block mb-2 flex items-center gap-2">
+                            <i class="fas fa-spa text-pink-400"></i> Serviço desejado
+                        </label>
+                        <select id="servicoAgendamento" 
+                                class="form-input w-full p-3 border border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition bg-white/80 cursor-pointer">
+                            <option value="">Selecione um serviço</option>
+                            <option value="Estética e Higiene">🐩 Estética e Higiene (Banho, tosa, estética)</option>
+                            <option value="Saúde e Clínica Veterinária">🩺 Saúde e Clínica Veterinária</option>
+                            <option value="Bem-estar e Cuidados">🧘 Bem-estar e Cuidados (Daycare, hospedagem)</option>
+                            <option value="Conveniência (Produtos)">🛒 Conveniência - Retirada de produtos</option>
+                            <option value="Consulta de Rotina">💖 Consulta de Rotina</option>
+                            <option value="Vacinação">💉 Vacinação e Vermifugação</option>
+                        </select>
+                    </div>
+
+                    <!-- Observações -->
+                    <div>
+                        <label class="font-semibold text-gray-700 block mb-2 flex items-center gap-2">
+                            <i class="fas fa-pen text-pink-400"></i> Observações (opcional)
+                        </label>
+                        <textarea id="observacoes" rows="3" placeholder="Alguma informação importante? Ex: pet idoso, necessidades especiais..." 
+                               class="form-input w-full p-3 border border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-pink-400 outline-none transition bg-white/80 resize-none"></textarea>
+                    </div>
+
+                    <!-- Botão Agendar -->
+                    <button type="button" onclick="agendarHorario()" 
+                            class="btn-grace w-full mt-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2 transition">
+                        <i class="fas fa-heart heart-float"></i> Agendar agora
+                        <i class="fas fa-arrow-right text-sm"></i>
+                    </button>
+                </form>
+
+                <!-- Mensagem de resultado -->
+                <div id="resultado" class="text-center font-semibold mt-5 text-sm hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Informativos extras (horários e contato) -->
+    <div class="max-w-lg mx-auto px-4 mb-8 text-center">
+        <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-pink-100 flex flex-wrap justify-center gap-4 text-xs text-gray-500">
+            <div><i class="fas fa-clock text-pink-400"></i> Seg-Sex: 8h às 19h</div>
+            <div><i class="fas fa-clock text-pink-400"></i> Sáb: 9h às 16h</div>
+            <div><i class="fas fa-phone-alt text-pink-400"></i> (11) 99999-9999</div>
+            <div><i class="fab fa-whatsapp text-green-400"></i> WhatsApp: (11) 98888-7777</div>
+        </div>
+    </div>
+
+    <footer class="bg-gradient-to-r from-pink-200 to-rose-200 text-center pt-6 pb-5 border-t border-pink-300 mt-6">
+        <div class="flex justify-center gap-5 mb-3">
+            <i class="fab fa-instagram text-pink-600 hover:text-pink-800 transition text-lg cursor-pointer"></i>
+            <i class="fab fa-whatsapp text-pink-600 hover:text-pink-800 transition text-lg cursor-pointer"></i>
+            <i class="fas fa-envelope text-pink-600 hover:text-pink-800 transition text-lg cursor-pointer"></i>
+        </div>
+        <p class="text-xs text-rose-600">🐾 © 2026 Petshop Reino Animal · Cuidado que transforma vidas 🌸</p>
+    </footer>
+
+    <script>
+        function agendarHorario() {
+            // Capturar valores
+            const data = document.getElementById("dataAgendamento").value;
+            const horario = document.getElementById("horarioAgendamento").value;
+            const nomeCliente = document.getElementById("nomeCliente").value.trim();
+            const nomePet = document.getElementById("nomePet").value.trim();
+            const servico = document.getElementById("servicoAgendamento").value;
+            const observacoes = document.getElementById("observacoes").value.trim();
+
+            const resultadoDiv = document.getElementById("resultado");
+
+            // Validações
+            if (!data) {
+                mostrarMensagem("❌ Por favor, selecione uma data para o agendamento.", "error");
+                return;
+            }
+            if (!horario) {
+                mostrarMensagem("❌ Por favor, selecione um horário para o atendimento.", "error");
+                return;
+            }
+            if (!nomeCliente) {
+                mostrarMensagem("❌ Por favor, digite seu nome.", "error");
+                return;
+            }
+            if (!nomePet) {
+                mostrarMensagem("❌ Por favor, digite o nome do seu pet.", "error");
+                return;
+            }
+            if (!servico) {
+                mostrarMensagem("❌ Por favor, selecione um serviço.", "error");
+                return;
+            }
+
+            // Formatar data para exibição amigável
+            const dataObj = new Date(data);
+            const dataFormatada = dataObj.toLocaleDateString("pt-BR", { day: '2-digit', month: 'long', year: 'numeric' });
+
+            // Simular salvamento no localStorage (opcional) e exibir confirmação
+            const agendamento = {
+                id: Date.now(),
+                data: data,
+                horario: horario,
+                nomeCliente: nomeCliente,
+                nomePet: nomePet,
+                servico: servico,
+                observacoes: observacoes,
+                dataCriacao: new Date().toISOString()
+            };
+
+            // Salvar no localStorage para histórico (opcional)
+            let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+            agendamentos.push(agendamento);
+            localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
+
+            // Mensagem de sucesso
+            const servicoNome = servico.replace(/_/g, ' ');
+            const mensagem = `✨ Agendamento confirmado! ✨\n\n🐾 ${servicoNome}\n📅 ${dataFormatada} às ${horario}\n👤 Cliente: ${nomeCliente}\n🐶 Pet: ${nomePet}\n${observacoes ? `📝 Obs: ${observacoes}` : ''}\n\nEm breve entraremos em contato para confirmar! ❤️`;
+            
+            alert(mensagem);
+
+            // Limpar formulário após agendamento
+            document.getElementById("formAgendamento").reset();
+            mostrarMensagem("✅ Agendamento realizado com sucesso! Você receberá a confirmação por e-mail/WhatsApp.", "success");
+
+            // Limpar mensagem após 4 segundos
+            setTimeout(() => {
+                resultadoDiv.classList.add("hidden");
+            }, 4000);
+        }
+
+        function mostrarMensagem(texto, tipo) {
+            const resultadoDiv = document.getElementById("resultado");
+            resultadoDiv.innerHTML = texto;
+            resultadoDiv.classList.remove("hidden", "text-green-600", "text-red-500");
+            if (tipo === "success") {
+                resultadoDiv.classList.add("text-green-600");
+            } else {
+                resultadoDiv.classList.add("text-red-500");
+            }
+            
+            // Auto-esconder após 5 segundos
+            setTimeout(() => {
+                resultadoDiv.classList.add("hidden");
+            }, 5000);
+        }
+
+        // Definir data mínima como hoje
+        const hoje = new Date().toISOString().split('T')[0];
+        const campoData = document.getElementById("dataAgendamento");
+        if (campoData) {
+            campoData.min = hoje;
+        }
+
+        // Adicionar máscara visual e validação de horário (opcional)
+        const horarioInput = document.getElementById("horarioAgendamento");
+        if (horarioInput) {
+            horarioInput.addEventListener("change", function() {
+                const hora = this.value;
+                if (hora < "08:00" || hora > "19:00") {
+                    if (hora < "08:00") {
+                        alert("🕐 Nosso horário de atendimento começa às 08:00. Por favor, escolha um horário entre 08:00 e 19:00.");
+                        this.value = "";
+                    } else if (hora > "19:00") {
+                        alert("🕐 Nosso horário de atendimento termina às 19:00. Por favor, escolha um horário entre 08:00 e 19:00.");
+                        this.value = "";
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

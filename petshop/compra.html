@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Carrinho · Reino Animal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Quicksand', sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #FAF7E6 0%, #FFF0F5 100%);
+        }
+        .btn-cart {
+            transition: all 0.2s ease;
+        }
+        .btn-cart:active {
+            transform: scale(0.96);
+        }
+        .cart-card {
+            transition: all 0.3s ease;
+        }
+        .cart-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px -10px rgba(244, 114, 182, 0.2);
+        }
+        .empty-cart {
+            animation: floatSoft 3s ease-in-out infinite;
+        }
+        @keyframes floatSoft {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .pulse-total {
+            animation: pulseSoft 2s ease-in-out infinite;
+        }
+        @keyframes pulseSoft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body class="text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER -->
+    <header class="bg-white/80 backdrop-blur-md px-6 md:px-10 py-3 flex justify-between items-center border-b border-pink-200 sticky top-0 z-50 shadow-sm">
+        
+        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+            <div class="w-[55px] h-[55px] rounded-full bg-gradient-to-br from-pink-400 to-rose-400 flex items-center justify-center shadow-md">
+                <i class="fas fa-paw text-white text-xl"></i>
+            </div>
+            <div class="hidden sm:block">
+                <span class="text-xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">Reino Animal</span>
+                <p class="text-[10px] text-pink-400 -mt-1">❤️ amor que transforma</p>
+            </div>
+        </div>
+
+        <nav class="space-x-5 md:space-x-7 font-semibold hidden md:flex bg-pink-50/60 px-6 py-2 rounded-full shadow-inner">
+            <a href="index.html" class="text-pink-600 hover:text-pink-800 transition flex items-center gap-1"><i class="fas fa-paw text-xs"></i> Home</a>
+            <a href="index.html#servicos" class="text-gray-600 hover:text-pink-600 transition flex items-center gap-1"><i class="fas fa-heart text-xs"></i> Serviços</a>
+            <a href="agendamento.html" class="text-gray-600 hover:text-pink-600 transition flex items-center gap-1"><i class="fas fa-calendar-alt text-xs"></i> Agendamentos</a>
+            <a href="index-produtos.html" class="text-gray-600 hover:text-pink-600 transition flex items-center gap-1"><i class="fas fa-store text-xs"></i> Produtos</a>
+        </nav>
+
+        <!-- botão voltar elegante -->
+        <a href="index-produtos.html" class="flex items-center gap-2 bg-pink-100 hover:bg-pink-200 text-pink-600 px-5 py-2 rounded-full transition shadow-sm text-sm font-medium">
+            <i class="fas fa-arrow-left text-xs"></i>
+            <span class="hidden sm:inline">Voltar às compras</span>
+        </a>
+    </header>
+
+    <main class="flex-1 max-w-5xl mx-auto p-5 md:p-8 w-full">
+        
+        <!-- TÍTULO CARRINHO -->
+        <div class="flex items-center gap-3 mb-6">
+            <i class="fas fa-shopping-bag text-3xl text-pink-400"></i>
+            <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+                Meu Carrinho
+            </h1>
+            <span id="contadorItens" class="bg-pink-100 text-pink-600 text-sm px-3 py-1 rounded-full ml-2 font-semibold">0 itens</span>
+        </div>
+
+        <!-- LISTA DE PRODUTOS -->
+        <div id="carrinho" class="space-y-4 mb-8">
+            <!-- os produtos serão inseridos via JS -->
+        </div>
+
+        <!-- MENSAGEM CARRINHO VAZIO (aparece dinamicamente) -->
+        <div id="emptyMessage" class="hidden text-center py-16 bg-white/50 rounded-3xl border border-dashed border-pink-300">
+            <div class="empty-cart">
+                <i class="fas fa-shopping-basket text-6xl text-pink-300 mb-4"></i>
+                <p class="text-gray-500 text-lg">Seu carrinho está vazio... 🛍️</p>
+                <p class="text-sm text-pink-400 mt-2">Que tal adicionar alguns mimos para seu pet?</p>
+                <button onclick="window.location.href='index-produtos.html'" class="mt-6 bg-gradient-to-r from-pink-400 to-rose-400 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transition transform hover:scale-105">
+                    <i class="fas fa-paw"></i> Explorar produtos
+                </button>
+            </div>
+        </div>
+
+        <!-- TOTAL E FINALIZAÇÃO -->
+        <div id="totalCard" class="mt-8 bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-xl border border-pink-100 hidden">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-5">
+                <div class="text-center md:text-left">
+                    <p class="text-gray-500 text-sm"><i class="fas fa-tag"></i> Total da compra</p>
+                    <p class="text-4xl md:text-5xl font-black text-pink-500">
+                        R$ <span id="total">0,00</span>
+                    </p>
+                    <p class="text-xs text-green-500 mt-1 flex items-center justify-center md:justify-start gap-1">
+                        <i class="fas fa-check-circle"></i> Frete grátis para Sul e Sudeste
+                    </p>
+                </div>
+                <div class="flex gap-3 flex-wrap justify-center">
+                    <button onclick="limparCarrinho()" class="btn-cart bg-gray-100 hover:bg-gray-200 text-gray-600 px-6 py-3 rounded-xl font-semibold transition flex items-center gap-2">
+                        <i class="fas fa-trash-alt"></i> Limpar
+                    </button>
+                    <button onclick="finalizarCompra()" class="btn-cart bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg transition flex items-center gap-2">
+                        <i class="fas fa-heart"></i> Finalizar Compra
+                    </button>
+                </div>
+            </div>
+            <!-- icones de pagamento -->
+            <div class="flex justify-center gap-4 mt-5 pt-4 border-t border-pink-100">
+                <i class="fab fa-cc-visa text-gray-400 text-xl"></i>
+                <i class="fab fa-cc-mastercard text-gray-400 text-xl"></i>
+                <i class="fab fa-pix text-pink-400 text-xl"></i>
+                <i class="fas fa-barcode text-gray-400 text-xl"></i>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gradient-to-r from-pink-200 to-rose-200 text-center pt-6 pb-5 border-t border-pink-300 mt-6">
+        <div class="flex justify-center gap-5 mb-3">
+            <i class="fab fa-instagram text-pink-600 hover:text-pink-800 transition text-lg"></i>
+            <i class="fab fa-whatsapp text-pink-600 hover:text-pink-800 transition text-lg"></i>
+            <i class="fas fa-envelope text-pink-600 hover:text-pink-800 transition text-lg"></i>
+        </div>
+        <p class="text-xs text-rose-600">🐾 © 2026 Petshop Reino Animal · Cuidado que transforma vidas 🐾</p>
+    </footer>
+
+    <script>
+        // FUNÇÕES DO CARRINHO (com persistência e total dinâmico)
+        function getCarrinho() {
+            return JSON.parse(localStorage.getItem("carrinho")) || [];
+        }
+
+        function salvarCarrinho(carrinho) {
+            localStorage.setItem("carrinho", JSON.stringify(carrinho));
+        }
+
+        function atualizarContador() {
+            let carrinho = getCarrinho();
+            let totalItens = carrinho.reduce((sum, item) => sum + (item.quantidade || 1), 0);
+            let contadorSpan = document.getElementById("contadorItens");
+            if (contadorSpan) {
+                contadorSpan.innerText = `${totalItens} ${totalItens === 1 ? 'item' : 'itens'}`;
+            }
+        }
+
+        function renderizar() {
+            let carrinho = getCarrinho();
+            let div = document.getElementById("carrinho");
+            let emptyMsg = document.getElementById("emptyMessage");
+            let totalCard = document.getElementById("totalCard");
+
+            if (!carrinho.length) {
+                div.innerHTML = "";
+                if (emptyMsg) emptyMsg.classList.remove("hidden");
+                if (totalCard) totalCard.classList.add("hidden");
+                atualizarContador();
+                document.getElementById("total").innerText = "0,00";
+                return;
+            }
+
+            if (emptyMsg) emptyMsg.classList.add("hidden");
+            if (totalCard) totalCard.classList.remove("hidden");
+
+            div.innerHTML = "";
+            let totalGeral = 0;
+
+            carrinho.forEach((item, index) => {
+                // Garantir quantidade
+                if (!item.quantidade || item.quantidade < 1) item.quantidade = 1;
+                
+                let subtotal = item.preco * item.quantidade;
+                totalGeral += subtotal;
+
+                // Formatação do preço correta
+                let precoFormatado = item.preco.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                let subtotalFormatado = subtotal.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                div.innerHTML += `
+                    <div class="cart-card bg-white rounded-2xl shadow-md p-4 flex flex-col sm:flex-row gap-4 items-center border border-pink-100 transition-all">
+                        <img src="${item.imagem}" class="w-24 h-24 object-cover rounded-xl shadow-sm" onerror="this.src='https://placehold.co/200x200?text=🐾'">
+                        
+                        <div class="flex-1 w-full">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+                                <div>
+                                    <h2 class="font-bold text-lg text-gray-800">${escapeHtml(item.nome)}</h2>
+                                    <p class="text-pink-400 text-sm flex items-center gap-1"><i class="fas fa-tag"></i> ${escapeHtml(item.categoria)}</p>
+                                </div>
+                                <p class="text-2xl font-bold text-pink-500">R$ ${subtotalFormatado}</p>
+                            </div>
+                            
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-3 gap-3">
+                                <div class="flex items-center gap-3 bg-pink-50 rounded-full px-3 py-1 w-fit shadow-inner">
+                                    <button onclick="diminuir(${index})" class="btn-cart w-8 h-8 rounded-full bg-white text-pink-500 hover:bg-pink-200 flex items-center justify-center font-bold shadow-sm">
+                                        <i class="fas fa-minus text-xs"></i>
+                                    </button>
+                                    <span class="font-bold text-gray-700 min-w-[30px] text-center">${item.quantidade}</span>
+                                    <button onclick="aumentar(${index})" class="btn-cart w-8 h-8 rounded-full bg-pink-400 text-white hover:bg-pink-500 flex items-center justify-center font-bold shadow-sm">
+                                        <i class="fas fa-plus text-xs"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="flex gap-2">
+                                    <p class="text-gray-400 text-xs"><i class="fas fa-credit-card"></i> Até 3x sem juros</p>
+                                    <button onclick="remover(${index})" class="text-red-400 hover:text-red-600 transition text-sm flex items-center gap-1 bg-red-50 px-3 py-1 rounded-full">
+                                        <i class="fas fa-trash-alt"></i> Remover
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("total").innerText = totalGeral.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            atualizarContador();
+        }
+
+        // Função para evitar XSS
+        function escapeHtml(str) {
+            if (!str) return "";
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+                return c;
+            });
+        }
+
+        // Controles de quantidade
+        function aumentar(index) {
+            let carrinho = getCarrinho();
+            if (carrinho[index]) {
+                carrinho[index].quantidade = (carrinho[index].quantidade || 1) + 1;
+                salvarCarrinho(carrinho);
+                renderizar();
+            }
+        }
+
+        function diminuir(index) {
+            let carrinho = getCarrinho();
+            if (carrinho[index]) {
+                let qtdAtual = carrinho[index].quantidade || 1;
+                if (qtdAtual > 1) {
+                    carrinho[index].quantidade = qtdAtual - 1;
+                    salvarCarrinho(carrinho);
+                    renderizar();
+                } else {
+                    // Se quantidade for 1 e clicar em diminuir, opcional: remover item (experiência amigável)
+                    if (confirm("Deseja remover este item do carrinho?")) {
+                        carrinho.splice(index, 1);
+                        salvarCarrinho(carrinho);
+                        renderizar();
+                    }
+                }
+            }
+        }
+
+        function remover(index) {
+            let carrinho = getCarrinho();
+            carrinho.splice(index, 1);
+            salvarCarrinho(carrinho);
+            renderizar();
+        }
+
+        function limparCarrinho() {
+            if (confirm("🐾 Tem certeza que deseja remover TODOS os itens do carrinho?")) {
+                localStorage.removeItem("carrinho");
+                renderizar();
+            }
+        }
+
+        function finalizarCompra() {
+            let carrinho = getCarrinho();
+            if (carrinho.length === 0) {
+                alert("💖 Seu carrinho está vazio! Adicione produtos para finalizar a compra.");
+                return;
+            }
+            
+            // Simulação de finalização com carinho
+            let total = carrinho.reduce((sum, item) => sum + (item.preco * (item.quantidade || 1)), 0);
+            let totalFormat = total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            
+            if (confirm(`🐾 Finalizar compra no valor de ${totalFormat}? \n\nObrigada por confiar no Reino Animal! ❤️`)) {
+                alert("✨ Pedido realizado com sucesso! ✨\nEm breve você receberá as informações de entrega no e-mail cadastrado.\n\nAgradecemos imensamente pelo carinho com seu pet! 🐶🐱");
+                localStorage.removeItem("carrinho");
+                renderizar();
+                // Redireciona para página inicial após finalizar (opcional)
+                // window.location.href = "index.html";
+            }
+        }
+
+        // Inicializar renderização
+        renderizar();
+    </script>
+</body>
+</html>
